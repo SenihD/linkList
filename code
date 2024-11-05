@@ -79,8 +79,24 @@ class linkedList{
             delete tempAddress;
             priorTempAddress->next = NULL;
         }
-        void deleteFromPosition(){
-            
+        void deleteFromPosition(int position){
+            Node* tempAddress = head;
+            Node* priorTempAddress = head;
+            int priorPosition = position;
+            while(position > 1){
+                if(position == 2){
+                    priorTempAddress = tempAddress;
+                }
+                tempAddress = tempAddress->next;
+                position--;
+            }
+            if (priorPosition > 1){
+                priorTempAddress->next = tempAddress->next;
+            }
+            else {
+                head = tempAddress->next;
+            }
+            delete tempAddress;
         }
 };
 
@@ -99,6 +115,7 @@ int main(){
 
     list1.deleteFromBeginning();
     list1.deleteFromEnd();
+    list1.deleteFromPosition(5);
 
     list1.display();
     return 0;
