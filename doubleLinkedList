@@ -1,0 +1,96 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node{
+    int value;
+    Node* next;
+    Node* previous;
+};
+
+class doubleLinkedList {
+
+    Node* head = NULL;
+    Node* tail = NULL;
+
+    public :
+
+    //O(n)
+    void display(){
+        Node* tempAddress = head;
+        while(tempAddress){
+            cout << tempAddress->value << " ";
+            tempAddress = tempAddress->next;
+        }
+    }
+
+    //O(n)
+    void displayInverse(){
+        Node* tempAddress = tail;
+        while (tempAddress){
+            cout << tempAddress->value << " ";
+            tempAddress = tempAddress->previous;
+        }
+    }
+
+    int countLength(){
+        Node* tempAddress = head;
+        int count = 0;
+        while (tempAddress){
+            count++;
+            tempAddress = tempAddress->next;
+        }
+        return count;
+    }
+
+    //O(1)
+    void insertAtBeginning(int index){
+        Node* newNode = new Node();
+        newNode->value = index;
+        newNode->next = head;
+        newNode->previous = NULL;
+        if (head && tail){
+            head->previous = newNode;
+        }
+        else{
+            tail = newNode;
+        }
+        head = newNode;
+    }
+
+    //O(1)
+    void inserAtEnd(int index){
+        Node* newNode = new Node();
+        newNode->value = index;
+        newNode->next = NULL;
+        newNode->previous = tail;
+        if (head && tail){
+            tail->next = newNode;
+        }
+        else{
+            head = newNode;
+        }
+        tail = newNode;
+    }
+
+    void insertAtPosition(int index, int position){
+        
+    }
+};
+
+int main(){
+
+    doubleLinkedList list1;
+    list1.inserAtEnd(10);
+    list1.insertAtBeginning(0);
+    list1.inserAtEnd(20);
+    list1.insertAtBeginning(-10);
+    list1.insertAtPosition(9, 1);
+
+    list1.display();
+    cout << endl;
+    list1.displayInverse();
+    cout << endl;
+    
+    int n = list1.countLength();
+    cout << n;
+}
