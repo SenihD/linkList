@@ -1,3 +1,4 @@
+
 #include <bits/stdc++.h>
 using namespace std;
 
@@ -74,6 +75,40 @@ class doubleLinkedList {
 
     void insertAtPosition(int index, int position){
         
+        if(head){
+            Node* tempAddress = head;
+            Node* newNode = new Node();
+            newNode->value = index;
+            //node(s) exists
+            while (position > 1){
+                if(tempAddress == tail && position == 2){
+                    newNode->previous = tail;
+                    newNode->next = NULL;
+                    tail->next= newNode;
+                    tail = newNode;
+                }
+                else {
+                    tempAddress = tempAddress->next;
+                }
+                position--;
+                
+            }
+            if (tail != newNode){
+                newNode->next = tempAddress;
+                newNode->previous = tempAddress->previous;
+                if (head != tempAddress){
+                    tempAddress->previous->next = newNode;
+                    tempAddress->previous = newNode;
+                }
+                else{
+                    tempAddress->previous = newNode;
+                    head = newNode;
+                }
+            }
+        }
+        else{
+            insertAtBeginning(index);
+        }
     }
 };
 
@@ -84,7 +119,7 @@ int main(){
     list1.insertAtBeginning(0);
     list1.inserAtEnd(20);
     list1.insertAtBeginning(-10);
-    list1.insertAtPosition(9, 1);
+    list1.insertAtPosition(9, 5);
 
     list1.display();
     cout << endl;
