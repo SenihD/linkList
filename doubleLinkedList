@@ -33,6 +33,7 @@ class doubleLinkedList {
         }
     }
 
+    //O(n)
     int countLength(){
         Node* tempAddress = head;
         int count = 0;
@@ -73,6 +74,7 @@ class doubleLinkedList {
         tail = newNode;
     }
 
+    //O(n)
     void insertAtPosition(int index, int position){
         
         if(head){
@@ -106,8 +108,52 @@ class doubleLinkedList {
                 }
             }
         }
-        else{
+        else if (position == 1){
             insertAtBeginning(index);
+        }
+    }
+
+    //O(1)
+    void deleteAtBeginning(){
+        Node* tempAddress = head;
+        head = head->next;
+        head->previous = NULL;
+        delete tempAddress;
+    }
+
+    //O(1)
+    void deleteAtEnd(){
+        Node* tempAddress = tail;
+        tail = tail->previous;
+        tail->next = NULL;
+        delete tempAddress;
+    }
+
+    //O(n)
+    void deleteAtPosition(int position){
+        Node* tempAddress = head;
+        for (int i = 1; i < position ; i++){
+            tempAddress = tempAddress->next;
+        }
+        if (tempAddress->next && tempAddress->previous){
+            tempAddress->previous->next =  tempAddress->next;
+            tempAddress->next->previous = tempAddress->previous;
+            delete tempAddress;
+        }
+        else if (tempAddress->previous){
+            tail = tempAddress->previous;
+            tail->next = NULL;
+            delete tempAddress;
+        }
+        else{
+            head = head->next;
+            if(head) {
+                head->previous = NULL;
+            }
+            else {
+                tail = head;
+            }
+            delete tempAddress;
         }
     }
 };
@@ -115,11 +161,10 @@ class doubleLinkedList {
 int main(){
 
     doubleLinkedList list1;
-    list1.inserAtEnd(10);
-    list1.insertAtBeginning(0);
-    list1.inserAtEnd(20);
-    list1.insertAtBeginning(-10);
-    list1.insertAtPosition(9, 5);
+    list1.insertAtPosition(9, 1);
+    list1.insertAtPosition(10, 2);
+    list1.insertAtPosition(9, 3);
+    list1.deleteAtPosition(1);
 
     list1.display();
     cout << endl;
